@@ -1,0 +1,9 @@
+<div
+  class="scroll-progress"
+  [style.transform]="'scaleX(' + store.scrollProgress() / 100 + ')'"
+  role="progressbar"
+  [attr.aria-valuenow]="store.scrollProgress()"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-label="Page scroll progress"
+></div>

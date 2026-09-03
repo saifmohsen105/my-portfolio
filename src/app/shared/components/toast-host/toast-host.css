@@ -1,0 +1,53 @@
+.toast-host {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  z-index: 140;
+  display: grid;
+  gap: 0.5rem;
+  width: min(100% - 2rem, 26rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  pointer-events: auto;
+}
+
+.toast span {
+  flex: 1;
+}
+
+.toast button {
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.toast--success {
+  border-color: color-mix(in srgb, var(--color-success) 35%, transparent);
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface-elevated));
+}
+
+.toast--error {
+  border-color: color-mix(in srgb, var(--color-danger) 35%, transparent);
+  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface-elevated));
+}
+
+.toast--info {
+  border-color: var(--color-line-strong);
+}

@@ -1,0 +1,24 @@
+<section id="approach" class="approach section-block" aria-labelledby="approach-heading">
+  <div class="container-page">
+    <div appReveal>
+      <app-section-header
+        eyebrow="How I work"
+        title="Engineering habits that keep products shippable"
+        subtitle="A practical approach shaped by dashboards, marketplaces, and client delivery — not slide-deck methodology."
+      />
+    </div>
+
+    <ol class="approach__list" aria-labelledby="approach-heading">
+      @for (item of items; track item.title; let i = $index) {
+        <li class="approach__item" appReveal>
+          <span class="approach__index" aria-hidden="true">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+          <div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+    <h2 id="approach-heading" class="visually-hidden">How I work</h2>
+  </div>
+</section>

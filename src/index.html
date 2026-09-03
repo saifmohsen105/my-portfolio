@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <title>Saif Mohsen — Full-Stack Developer (Angular + Node.js)</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Portfolio of Saif Mohsen Refai — full-stack developer building Angular + Node.js products: marketplaces, ecommerce, admin systems, and bilingual SSR sites."
+    />
+    <meta
+      name="keywords"
+      content="Saif Mohsen, Full Stack Developer, Angular, Node.js, TypeScript, SHARY, Home Expand, Mustasharuna, Cairo"
+    />
+    <meta name="author" content="Saif Mohsen Refai" />
+    <meta name="theme-color" content="#0a1014" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio-theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Saif Mohsen — Full-Stack Developer (Angular + Node.js)" />
+    <meta
+      property="og:description"
+      content="Full-stack developer building production Angular + Node.js products for platforms, marketplaces, and dashboards."
+    />
+    <meta property="og:image" content="images/hero-display.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Saif Mohsen — Full-Stack Developer (Angular + Node.js)" />
+    <meta
+      name="twitter:description"
+      content="Full-stack developer building production Angular + Node.js products for platforms, marketplaces, and dashboards."
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

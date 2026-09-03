@@ -1,0 +1,46 @@
+<section class="hero section-block" aria-labelledby="hero-heading">
+  <div class="container-page hero__grid">
+    <div class="hero__content" appReveal>
+      <div class="hero__label">
+        <span class="hero__status" aria-hidden="true"></span>
+        <p class="hero__availability">{{ site.availability }}</p>
+      </div>
+
+      <p class="hero__identity">{{ site.name }} · {{ site.role }}</p>
+
+      <h1 id="hero-heading" class="hero__title">{{ site.headline }}</h1>
+
+      <p class="hero__positioning">{{ site.positioning }}</p>
+
+      <div class="hero__actions">
+        <a appUiButton href="/#projects" variant="primary">View projects</a>
+        <a appUiButton href="/#contact" variant="secondary">Discuss a role</a>
+      </div>
+
+      <ul class="hero__meta" aria-label="Profile details">
+        <li>{{ site.location }}</li>
+        <li>Angular · Node.js · TypeScript</li>
+      </ul>
+    </div>
+
+    <div class="hero__visual" appReveal>
+      <figure class="hero__frame">
+        <picture>
+          <source srcset="images/hero.webp" type="image/webp" />
+          <img
+            src="images/hero-display.jpg"
+            alt="Portrait of Saif Mohsen Refai, full-stack developer"
+            width="900"
+            height="1216"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
+      </figure>
+      <div class="hero__mark" aria-hidden="true">
+        <img src="images/logo.png" alt="" width="56" height="56" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>

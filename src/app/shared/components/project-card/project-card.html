@@ -1,0 +1,46 @@
+<article
+  class="project-card"
+  [class.project-card--building]="project().status === 'in-development'"
+>
+  <div class="project-card__top">
+    <div class="project-card__meta">
+      @if (project().company) {
+        <app-ui-badge>{{ project().company }}</app-ui-badge>
+      }
+      <app-ui-badge>{{ project().category }}</app-ui-badge>
+      @if (project().status === 'in-development') {
+        <app-ui-badge [accent]="true">In development</app-ui-badge>
+      }
+    </div>
+    <p class="project-card__role">{{ project().role }}</p>
+  </div>
+
+  <h3 class="project-card__title">
+    <a [routerLink]="['/projects', project().id]">{{ project().title }}</a>
+  </h3>
+  <p class="project-card__subtitle">{{ project().subtitle }}</p>
+  <p class="project-card__body">{{ project().contribution }}</p>
+
+  <ul class="project-card__stack" aria-label="Technologies">
+    @for (tech of project().stack.slice(0, 4); track tech) {
+      <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
+    }
+  </ul>
+
+  <div class="project-card__actions">
+    <a class="project-card__link" [routerLink]="['/projects', project().id]">
+      Case study
+      <span aria-hidden="true">→</span>
+    </a>
+    @if (project().liveUrl) {
+      <a
+        class="project-card__link project-card__link--muted"
+        [href]="project().liveUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Live site
+      </a>
+    }
+  </div>
+</article>

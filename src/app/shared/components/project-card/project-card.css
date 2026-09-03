@@ -1,0 +1,106 @@
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.4rem 1.45rem;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.project-card:hover {
+  border-color: var(--color-line-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.project-card--building {
+  background:
+    linear-gradient(180deg, var(--color-accent-soft), var(--color-surface-elevated) 28%),
+    var(--color-surface-elevated);
+}
+
+.project-card__top {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.project-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.project-card__role {
+  margin: 0;
+  color: var(--color-faint);
+  font-size: var(--text-caption);
+  font-weight: 500;
+}
+
+.project-card__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.project-card__title a:hover {
+  color: var(--color-accent);
+}
+
+.project-card__subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--color-accent-ink);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.project-card__body {
+  margin: 0.85rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 1.15rem 0 0;
+  padding: 0;
+}
+
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.35rem;
+  padding-top: 1.05rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.project-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.project-card__link:hover {
+  color: var(--color-accent);
+}
+
+.project-card__link--muted {
+  color: var(--color-muted);
+  font-weight: 500;
+}

@@ -1,0 +1,32 @@
+<section id="about" class="about section-block" aria-labelledby="about-title">
+  <div class="container-page">
+    <div appReveal>
+      <app-section-header
+        eyebrow="About"
+        title="Full-Stack Developer | Angular · Node.js · Express · Supabase"
+        subtitle="Production e-commerce, marketplace, and SaaS platforms — frontend architecture, REST APIs, and database work."
+      />
+    </div>
+
+    <div class="about__grid">
+      <article class="about__story" appReveal>
+        <h3 id="about-title" class="visually-hidden">About {{ site.firstName }}</h3>
+        <p>{{ site.summary }}</p>
+        <p>
+          Based in {{ site.location }}. Recent delivery spans Stint (Home Expand, E-Shary, StintPort, Career
+          In), EXGATE (Excellence Gate, Mustasharuna), a Web Master internship, and freelance commerce work
+          such as F-misk.
+        </p>
+      </article>
+
+      <ul class="about__points">
+        @for (point of points; track point.title) {
+          <li class="about__point" appReveal>
+            <h3>{{ point.title }}</h3>
+            <p>{{ point.body }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

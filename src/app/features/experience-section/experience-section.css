@@ -1,0 +1,84 @@
+.experience__list {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.experience__item {
+  padding: 1.65rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.experience__period {
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.experience__title {
+  margin: 0.45rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.experience__company {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+
+.experience__summary {
+  margin: 1rem 0 0;
+  color: var(--color-ink-soft);
+  line-height: 1.65;
+  max-width: 48rem;
+}
+
+.experience__highlights {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--color-muted);
+  display: grid;
+  gap: 0.55rem;
+  max-width: 48rem;
+}
+
+.experience__highlights li::marker {
+  color: var(--color-accent);
+}
+
+.experience__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 1.15rem 0 0;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .experience__item {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.32fr) 1fr;
+    gap: 1.5rem 2rem;
+    padding-block: 1.85rem;
+  }
+
+  .experience__summary,
+  .experience__highlights,
+  .experience__tech {
+    grid-column: 2;
+  }
+
+  .experience__header {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+}

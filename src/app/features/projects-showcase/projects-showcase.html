@@ -1,0 +1,39 @@
+<section id="projects" class="projects section-block" aria-labelledby="projects-heading">
+  <div class="container-page">
+    <div appReveal>
+      <app-section-header
+        eyebrow="Projects"
+        title="Projects"
+        subtitle="Case studies from the companies on my CV — contribution, architecture, and stack."
+      />
+    </div>
+
+    <div class="projects__filters" role="tablist" aria-label="Filter projects" appReveal>
+      @for (filter of filters; track filter) {
+        <button
+          type="button"
+          role="tab"
+          class="projects__filter"
+          [class.projects__filter--active]="selected() === filter"
+          [attr.aria-selected]="selected() === filter"
+          (click)="select(filter)"
+        >
+          {{ filter }}
+        </button>
+      }
+    </div>
+
+    <div class="projects__grid">
+      @for (project of projects(); track project.id) {
+        <div appReveal>
+          <app-project-card [project]="project" />
+        </div>
+      } @empty {
+        <div class="projects__empty">
+          <p>No projects in this category.</p>
+        </div>
+      }
+    </div>
+    <h2 id="projects-heading" class="visually-hidden">Projects</h2>
+  </div>
+</section>

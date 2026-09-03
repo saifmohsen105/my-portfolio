@@ -1,0 +1,20 @@
+<footer class="footer">
+  <div class="container-page footer__inner">
+    <div class="footer__brand">
+      <p class="footer__name">{{ site.name }}</p>
+      <p class="footer__role">{{ site.role }} · {{ site.location }}</p>
+    </div>
+
+    <ul class="footer__links" aria-label="Social links">
+      @for (social of site.socials; track social.id) {
+        <li>
+          <a [href]="social.href" [attr.aria-label]="social.label" target="_blank" rel="noopener noreferrer">
+            {{ social.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <p class="footer__copy">© {{ year }} {{ site.firstName }} Mohsen. Built with Angular.</p>
+  </div>
+</footer>

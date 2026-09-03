@@ -1,0 +1,35 @@
+.section-header {
+  max-width: 40rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-header--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-header--center .eyebrow {
+  justify-content: center;
+}
+
+.section-header--center .eyebrow::before {
+  display: none;
+}
+
+.section-header__title {
+  margin: 0.7rem 0 0;
+  font-size: var(--text-h2);
+  font-weight: 600;
+}
+
+.section-header__subtitle {
+  margin: 0.8rem 0 0;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.section-header--center .section-header__subtitle {
+  margin-inline: auto;
+  max-width: 36rem;
+}

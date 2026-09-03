@@ -1,0 +1,39 @@
+<section id="contact" class="contact section-block" aria-labelledby="contact-heading">
+  <div class="container-page contact__grid">
+    <div appReveal>
+      <app-section-header
+        eyebrow="Contact"
+        title="Ready to talk about a role or a product build"
+        subtitle="Hiring a full-stack Angular developer, or need help with a storefront, admin system, or bilingual SSR site? Send a short brief."
+      />
+
+      <ul class="contact__details">
+        <li>
+          <span>Email</span>
+          <a [href]="'mailto:' + site.email">{{ site.email }}</a>
+        </li>
+        <li>
+          <span>Phone</span>
+          <a [href]="'tel:' + site.phone">{{ site.phone }}</a>
+        </li>
+        <li>
+          <span>Location</span>
+          <p>{{ site.location }} · Remote-friendly</p>
+        </li>
+        <li>
+          <span>Social</span>
+          <div class="contact__socials">
+            @for (social of site.socials; track social.id) {
+              <a [href]="social.href" target="_blank" rel="noopener noreferrer">{{ social.label }}</a>
+            }
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="contact__form-wrap" appReveal>
+      <h2 id="contact-heading" class="visually-hidden">Contact form</h2>
+      <app-contact-form />
+    </div>
+  </div>
+</section>

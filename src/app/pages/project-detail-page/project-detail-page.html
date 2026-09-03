@@ -1,0 +1,119 @@
+@if (project(); as p) {
+  <article class="case section-block">
+    <div class="container-page">
+      <a routerLink="/" fragment="projects" class="case__back">← Back to projects</a>
+
+      <header class="case__header" appReveal>
+        <div class="case__badges">
+          @if (p.company) {
+            <app-ui-badge>{{ p.company }}</app-ui-badge>
+          }
+          @if (p.status === 'in-development') {
+            <app-ui-badge [accent]="true">In development</app-ui-badge>
+          }
+          <app-ui-badge>{{ p.category }}</app-ui-badge>
+        </div>
+        <h1>{{ p.title }}</h1>
+        <p class="case__subtitle">{{ p.subtitle }}</p>
+        <p class="case__role">{{ p.role }}</p>
+        <p class="case__contribution">{{ p.contribution }}</p>
+        <p class="case__desc">{{ p.description }}</p>
+
+        <div class="case__actions">
+          @if (p.liveUrl) {
+            <a
+              appUiButton
+              [href]="p.liveUrl"
+              variant="primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Live site</a
+            >
+          }
+          @if (p.githubUrl) {
+            <a
+              appUiButton
+              [href]="p.githubUrl"
+              variant="secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          }
+          @if (!p.liveUrl && !p.githubUrl) {
+            <a appUiButton [href]="'mailto:' + site.email" variant="accent">Request a walkthrough</a>
+          }
+        </div>
+        @if (p.privateNote) {
+          <p class="case__note">{{ p.privateNote }}</p>
+        }
+      </header>
+
+      <div class="case__narrative">
+        <section class="case__block case__block--wide" appReveal>
+          <h2>Overview</h2>
+          <p>{{ p.problem }}</p>
+        </section>
+        <section class="case__block case__block--wide" appReveal>
+          <h2>My role</h2>
+          <p>{{ p.context }}</p>
+        </section>
+      </div>
+
+      <div class="case__grid">
+        <section class="case__block" appReveal>
+          <h2>Implementation</h2>
+          <ul>
+            @for (item of p.features; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+
+        <section class="case__block" appReveal>
+          <h2>Architecture</h2>
+          <ul>
+            @for (item of p.architecture; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+
+        <section class="case__block" appReveal>
+          <h2>Engineering challenges</h2>
+          <ul>
+            @for (item of p.challenges; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+
+        <section class="case__block" appReveal>
+          <h2>Decisions</h2>
+          <ul>
+            @for (item of p.solutions; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+
+        <section class="case__block case__block--stack" appReveal>
+          <h2>Technology</h2>
+          <ul class="case__stack">
+            @for (tech of p.stack; track tech) {
+              <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  </article>
+} @else {
+  <section class="case section-block">
+    <div class="container-page case__empty">
+      <h1>Project not found</h1>
+      <p>This case study is unavailable.</p>
+      <a appUiButton routerLink="/" variant="primary">Return home</a>
+    </div>
+  </section>
+}
