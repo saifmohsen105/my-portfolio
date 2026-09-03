@@ -371,3 +371,38 @@ html[data-theme='dark'] {
     color: var(--color-faint);
   }
 }
+
+/*
+  Hero motion must stay GLOBAL (not component-encapsulated).
+  Angular production optimization renames @keyframes under emulated encapsulation
+  but leaves animation-name unscoped, so arcs freeze on production/Vercel builds.
+*/
+@keyframes hero-pulse-status {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-success) 22%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-success) 8%, transparent);
+  }
+}
+
+@keyframes hero-orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__status {
+    animation: hero-pulse-status 2.4s ease-in-out infinite;
+  }
+
+  .hero__orbit {
+    animation: hero-orbit-spin 8s linear infinite;
+  }
+
+  .hero__orbit--inner {
+    animation: hero-orbit-spin 12s linear infinite reverse;
+  }
+}

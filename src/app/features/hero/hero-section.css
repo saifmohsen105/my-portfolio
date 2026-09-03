@@ -187,32 +187,8 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero__status {
-    animation: pulse-status 2.4s ease-in-out infinite;
-  }
-
-  .hero__orbit {
-    animation: orbit-spin 8s linear infinite;
-  }
-
-  .hero__orbit--inner {
-    animation: orbit-spin 12s linear infinite reverse;
-  }
-}
-
-@keyframes pulse-status {
-  0%,
-  100% {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-success) 22%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-success) 8%, transparent);
-  }
-}
-
-@keyframes orbit-spin {
-  to {
-    rotate: 360deg;
-  }
-}
+/*
+  Orbit/status animations live in global styles.css.
+  Production CSS optimization renames @keyframes under emulated encapsulation
+  but drops the matching animation-name rewrite, which freezes the arcs on Vercel.
+*/
