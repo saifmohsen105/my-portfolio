@@ -24,23 +24,17 @@
     </div>
 
     <div class="hero__visual" appReveal>
-      <figure class="hero__frame">
-        <picture>
-          <source srcset="images/hero.webp" type="image/webp" />
-          <img
-            src="images/hero-display.jpg"
-            alt="Portrait of Saif Mohsen Refai, full-stack developer"
-            width="900"
-            height="1216"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </picture>
+      <div class="hero__orbit" aria-hidden="true"></div>
+      <div class="hero__orbit hero__orbit--inner" aria-hidden="true"></div>
+      <figure class="">
+        <img
+          src="images/logo.png"
+          alt="Saif Mohsen monogram"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
       </figure>
-      <div class="hero__mark" aria-hidden="true">
-        <img src="images/logo.png" alt="" width="56" height="56" loading="lazy" />
-      </div>
     </div>
   </div>
 </section>

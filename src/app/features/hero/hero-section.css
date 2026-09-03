@@ -1,12 +1,30 @@
 .hero {
+  position: relative;
+  isolation: isolate;
   padding-top: clamp(2rem, 5vw, 3.75rem);
   padding-bottom: clamp(3rem, 6vw, 5.5rem);
 }
 
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto auto;
+  width: min(42vw, 28rem);
+  height: min(42vw, 28rem);
+  translate: 12% -18%;
+  background: radial-gradient(circle, var(--color-hero-glow), transparent 68%);
+  pointer-events: none;
+}
+
 .hero__grid {
   display: grid;
-  gap: 2.5rem;
+  gap: 2.75rem;
   align-items: center;
+}
+
+.hero__content {
+  max-width: 40rem;
 }
 
 .hero__label {
@@ -14,11 +32,16 @@
   align-items: center;
   gap: 0.55rem;
   margin: 0;
+  padding: 0.35rem 0.7rem 0.35rem 0.55rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-surface-elevated) 78%, transparent);
 }
 
 .hero__status {
   width: 0.5rem;
   height: 0.5rem;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--color-success);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-success) 22%, transparent);
@@ -34,7 +57,7 @@
 }
 
 .hero__identity {
-  margin: 1.15rem 0 0;
+  margin: 1.25rem 0 0;
   font-family: var(--font-display);
   font-size: var(--text-label);
   font-weight: 600;
@@ -45,7 +68,7 @@
 
 .hero__title {
   margin: 0.75rem 0 0;
-  max-width: 18ch;
+  max-width: 16ch;
   font-size: var(--text-display);
   font-weight: 600;
   letter-spacing: var(--tracking-display);
@@ -57,14 +80,14 @@
   max-width: 36rem;
   color: var(--color-muted);
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: var(--leading-body);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.75rem;
+  margin-top: 1.85rem;
 }
 
 .hero__meta {
@@ -80,47 +103,57 @@
 
 .hero__visual {
   position: relative;
+  display: grid;
+  place-items: center;
   width: min(100%, 22rem);
+  aspect-ratio: 1;
   margin-inline: auto;
 }
 
-.hero__frame {
-  margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--color-line);
-  background:
-    linear-gradient(165deg, var(--color-accent-soft), transparent 46%),
-    var(--color-surface-elevated);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4 / 5;
+.hero__orbit,
+.hero__orbit--inner {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-.hero__frame picture {
-  display: block;
-  width: 100%;
-  height: 100%;
+.hero__orbit {
+  inset: -8%;
+  background: conic-gradient(
+    from 210deg,
+    transparent 0 62%,
+    var(--color-line-strong) 0 78%,
+    transparent 0 100%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 calc(100% - 1px));
 }
 
-.hero__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
+.hero__orbit--inner {
+  inset: -2%;
+  background: conic-gradient(
+    from 40deg,
+    transparent 0 72%,
+    color-mix(in srgb, var(--color-accent) 55%, var(--color-line)) 0 86%,
+    transparent 0 100%
+  );
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 calc(100% - 1px));
 }
 
 .hero__mark {
-  position: absolute;
-  left: -0.65rem;
-  bottom: 1.25rem;
-  width: 3.25rem;
-  height: 3.25rem;
-  padding: 0.35rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-line);
-  background: var(--color-surface-elevated);
-  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 72%;
+  aspect-ratio: 1;
+  margin: 0;
   overflow: hidden;
+  border-radius: 28%;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-line-strong));
+  background: #05080a;
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 10px color-mix(in srgb, var(--color-surface) 88%, transparent);
 }
 
 .hero__mark img {
@@ -131,14 +164,14 @@
 
 @media (min-width: 960px) {
   .hero__grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: 3.75rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+    gap: 4rem;
   }
 
   .hero__visual {
     width: min(100%, 26rem);
-    margin-inline: 0 0 auto;
     justify-self: end;
+    margin-inline: 0;
   }
 
   .hero__meta {
@@ -158,6 +191,14 @@
   .hero__status {
     animation: pulse-status 2.4s ease-in-out infinite;
   }
+
+  .hero__orbit {
+    animation: orbit-spin 8s linear infinite;
+  }
+
+  .hero__orbit--inner {
+    animation: orbit-spin 12s linear infinite reverse;
+  }
 }
 
 @keyframes pulse-status {
@@ -167,5 +208,11 @@
   }
   50% {
     box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-success) 8%, transparent);
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    rotate: 360deg;
   }
 }

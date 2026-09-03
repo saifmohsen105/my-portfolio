@@ -1,6 +1,11 @@
 import { Injectable, computed, signal } from '@angular/core';
+import {
+  type ThemeMode,
+  readStoredTheme,
+  writeStoredTheme,
+} from '../core/utils/theme-storage';
 
-export type ThemeMode = 'dark' | 'light';
+export type { ThemeMode };
 
 export interface ToastItem {
   id: string;
@@ -26,22 +31,14 @@ export class UiStore {
   setTheme(mode: ThemeMode): void {
     this.theme.set(mode);
     this.applyThemeToDom(mode);
-    try {
-      localStorage.setItem('portfolio-theme', mode);
-    } catch {
-      /* ignore */
-    }
+    writeStoredTheme(mode);
   }
 
   hydrateThemeFromStorage(): void {
-    try {
-      const stored = localStorage.getItem('portfolio-theme');
-      if (stored === 'light' || stored === 'dark') {
-        this.setTheme(stored);
-        return;
-      }
-    } catch {
-      /* ignore */
+    const stored = readStoredTheme();
+    if (stored) {
+      this.setTheme(stored);
+      return;
     }
 
     const prefersDark =

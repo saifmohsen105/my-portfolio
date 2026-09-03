@@ -17,15 +17,37 @@
     <meta name="theme-color" content="#0a1014" />
     <script>
       (function () {
+        var STORAGE_KEY = 'sm.ui.pref';
+        var LEGACY_KEY = 'portfolio-theme';
+        var SECRET = 'sm-portfolio-theme-v1';
+
+        function xorBytes(input, secret) {
+          var out = '';
+          for (var i = 0; i < input.length; i++) {
+            out += String.fromCharCode(input.charCodeAt(i) ^ secret.charCodeAt(i % secret.length));
+          }
+          return out;
+        }
+
+        function decodeTheme(raw) {
+          if (!raw) return null;
+          if (raw === 'light' || raw === 'dark') return raw;
+          try {
+            var json = xorBytes(decodeURIComponent(escape(atob(raw))), SECRET);
+            var data = JSON.parse(json);
+            if (data && (data.mode === 'light' || data.mode === 'dark')) return data.mode;
+          } catch (e) {}
+          return null;
+        }
+
         try {
-          var stored = localStorage.getItem('portfolio-theme');
           var theme =
-            stored === 'light' || stored === 'dark'
-              ? stored
-              : window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light';
+            decodeTheme(localStorage.getItem(STORAGE_KEY)) ||
+            decodeTheme(localStorage.getItem(LEGACY_KEY)) ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
           document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a1014' : '#f3f6f7');
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'dark');
         }

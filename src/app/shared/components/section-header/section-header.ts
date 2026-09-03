@@ -11,5 +11,5 @@ export class SectionHeader {
   readonly eyebrow = input.required<string>();
   readonly title = input.required<string>();
   readonly subtitle = input<string>();
-  readonly align = input<'start' | 'center'>('start');
+  readonly align = input<'start' | 'center'>('center');
 }

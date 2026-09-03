@@ -8,7 +8,12 @@
     <ul class="footer__links" aria-label="Social links">
       @for (social of site.socials; track social.id) {
         <li>
-          <a [href]="social.href" [attr.aria-label]="social.label" target="_blank" rel="noopener noreferrer">
+          <a
+            [href]="social.href"
+            [attr.aria-label]="social.label"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {{ social.label }}
           </a>
         </li>

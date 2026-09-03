@@ -33,7 +33,6 @@ export class Navbar {
   readonly site = SITE;
   readonly links = NAV_ITEMS;
   readonly open = signal(false);
-  readonly scrolled = signal(false);
 
   constructor() {
     effect(() => {
@@ -42,10 +41,12 @@ export class Navbar {
     });
 
     if (isPlatformBrowser(this.platformId)) {
-      fromEvent(window, 'scroll', { passive: true })
+      fromEvent(window, 'resize', { passive: true })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
-          this.scrolled.set(window.scrollY > 12);
+          if (window.matchMedia('(min-width: 1024px)').matches && this.open()) {
+            this.close();
+          }
         });
 
       fromEvent<KeyboardEvent>(window, 'keydown')

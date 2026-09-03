@@ -35,7 +35,7 @@ export const SITE: SiteProfile = {
     {
       id: 'linkedin',
       label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/saifmohsen105',
+      href: 'https://www.linkedin.com/in/saif-mohsen-265ba72a4',
       icon: 'linkedin',
     },
     {
@@ -95,7 +95,16 @@ export const EXPERIENCE: ExperienceRole[] = [
       'StintPort — bilingual (AR/EN) Angular 21 SSR corporate site for international trading, with compile-time i18n, lazy routes, and SEO baseline.',
       'Career In — career summit platform on Angular SSR, Express, and Sequelize/MySQL: employee registration, CV upload to S3, and post-register QR.',
     ],
-    technologies: ['Angular', 'TypeScript', 'Node.js', 'Express', 'Supabase', 'PostgreSQL', 'MySQL', 'Sequelize'],
+    technologies: [
+      'Angular',
+      'TypeScript',
+      'Node.js',
+      'Express',
+      'Supabase',
+      'PostgreSQL',
+      'MySQL',
+      'Sequelize',
+    ],
   },
   {
     id: 'exgate-co',
@@ -110,7 +119,16 @@ export const EXPERIENCE: ExperienceRole[] = [
       'Excellence Gate — bilingual Angular 21 corporate site and multi-step idea-submission workflow with file-upload UI and Signals-based feedback; led a full UI redesign.',
       'Mustasharuna — consulting SaaS admin dashboard and REST APIs for consultant/company management, approval workflows, dispute handling, and bilingual (AR/EN) validation.',
     ],
-    technologies: ['Angular', 'TypeScript', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Supabase', 'Next.js'],
+    technologies: [
+      'Angular',
+      'TypeScript',
+      'Node.js',
+      'Express',
+      'Prisma',
+      'PostgreSQL',
+      'Supabase',
+      'Next.js',
+    ],
   },
   {
     id: 'webmaster',
@@ -424,7 +442,8 @@ export const PROJECTS: ProjectCaseStudy[] = [
       'Bilingual Next.js marketing site with Universal Links pipeline',
     ],
     liveUrl: 'https://mustasharuna.com/ar/',
-    privateNote: 'Payments, escrow, jobs, and live-session infra are teammates’ systems — not claimed here.',
+    privateNote:
+      'Payments, escrow, jobs, and live-session infra are teammates’ systems — not claimed here.',
   },
   {
     id: 'fmisk',

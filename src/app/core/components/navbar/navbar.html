@@ -1,4 +1,4 @@
-<header class="navbar" [class.navbar--scrolled]="scrolled()" [class.navbar--open]="open()">
+<header class="navbar" [class.navbar--open]="open()">
   <div class="container-page navbar__inner">
     <a routerLink="/" class="navbar__brand" (click)="close()" aria-label="Saif Mohsen — Home">
       <img class="navbar__logo" src="images/logo.png" alt="" width="36" height="36" />
@@ -51,18 +51,10 @@
         <span class="navbar__menu-lines" aria-hidden="true">
           <span></span>
           <span></span>
-          <span></span>
         </span>
       </button>
     </div>
   </div>
-
-  <div
-    class="navbar__backdrop"
-    [class.navbar__backdrop--visible]="open()"
-    (click)="close()"
-    aria-hidden="true"
-  ></div>
 
   <aside
     id="mobile-nav"
@@ -73,61 +65,94 @@
     aria-modal="true"
     aria-label="Mobile navigation"
   >
-    <div class="navbar__drawer-head">
+    <div class="navbar__drawer-glow" aria-hidden="true"></div>
+
+    <div class="navbar__drawer-top">
       <div class="navbar__drawer-brand">
-        <img src="images/logo.png" alt="" width="32" height="32" />
+        <img src="images/logo.png" alt="" width="40" height="40" />
         <div>
           <p class="navbar__drawer-name">{{ site.firstName }} Mohsen</p>
-          <p class="navbar__drawer-meta">{{ site.location }}</p>
+          <p class="navbar__drawer-meta">{{ site.role }}</p>
         </div>
       </div>
+
       <button type="button" class="navbar__drawer-close" aria-label="Close menu" (click)="close()">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.75"
-          aria-hidden="true"
-        >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
       </button>
     </div>
 
+    <p class="navbar__drawer-kicker">Menu</p>
+
     <nav class="navbar__drawer-nav" aria-label="Mobile">
       @for (link of links; track link.label; let i = $index) {
-        <a class="navbar__drawer-link" [href]="link.href" (click)="close()">
-          <span class="navbar__drawer-index">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
-          <span>{{ link.label }}</span>
+        <a
+          class="navbar__drawer-link"
+          [href]="link.href"
+          [style.--i]="i"
+          (click)="close()"
+        >
+          <span class="navbar__drawer-index">0{{ i + 1 }}</span>
+          <span class="navbar__drawer-label">{{ link.label }}</span>
+          <span class="navbar__drawer-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
         </a>
       }
     </nav>
 
     <div class="navbar__drawer-foot">
-      <button
-        type="button"
-        class="navbar__theme navbar__theme--drawer"
-        (click)="toggleTheme()"
-        [attr.aria-label]="ui.themeActionLabel()"
-      >
-        <span class="navbar__theme-icon" aria-hidden="true">
-          @if (ui.isDark()) {
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <circle cx="12" cy="12" r="4" />
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              />
-            </svg>
-          } @else {
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <path d="M21 14.3A8.5 8.5 0 1 1 9.7 3a7 7 0 0 0 11.3 11.3Z" />
-            </svg>
-          }
-        </span>
-        <span>{{ ui.themeLabel() }} mode</span>
-      </button>
+      <div class="navbar__drawer-info">
+        <p class="navbar__drawer-location">{{ site.location }}</p>
+        <p class="navbar__drawer-availability">{{ site.availability }}</p>
+      </div>
 
-      <a appUiButton href="/#contact" variant="primary" (click)="close()">Hire me</a>
+      <div class="navbar__drawer-socials">
+        @for (social of site.socials; track social.id) {
+          <a
+            class="navbar__drawer-social"
+            [href]="social.href"
+            [attr.aria-label]="social.label"
+            [attr.target]="social.id === 'email' ? null : '_blank'"
+            [attr.rel]="social.id === 'email' ? null : 'noopener noreferrer'"
+            (click)="close()"
+          >
+            {{ social.label }}
+          </a>
+        }
+      </div>
+
+      <div class="navbar__drawer-actions">
+        <button
+          type="button"
+          class="navbar__theme navbar__theme--drawer"
+          (click)="toggleTheme()"
+          [attr.aria-label]="ui.themeActionLabel()"
+        >
+          <span class="navbar__theme-icon" aria-hidden="true">
+            @if (ui.isDark()) {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <circle cx="12" cy="12" r="4" />
+                <path
+                  d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                />
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path d="M21 14.3A8.5 8.5 0 1 1 9.7 3a7 7 0 0 0 11.3 11.3Z" />
+              </svg>
+            }
+          </span>
+          <span>{{ ui.themeLabel() }} mode</span>
+        </button>
+
+        <a appUiButton class="navbar__drawer-cta" href="/#contact" variant="primary" (click)="close()">
+          Hire me
+        </a>
+      </div>
     </div>
   </aside>
 </header>
