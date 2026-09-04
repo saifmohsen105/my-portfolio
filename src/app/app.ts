@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './core/components/navbar/navbar';
 import { Footer } from './core/components/footer/footer';
@@ -16,18 +16,31 @@ import { UiStore } from './signals-store/ui.store';
 })
 export class App {
   private readonly ui = inject(UiStore);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     afterNextRender(() => {
       this.ui.hydrateThemeFromStorage();
 
-      const onScroll = () => {
+      let ticking = false;
+      const updateProgress = () => {
         const d = document.documentElement;
         const total = d.scrollHeight - d.clientHeight;
         this.ui.setScrollProgress(total > 0 ? (d.scrollTop / total) * 100 : 0);
+        ticking = false;
       };
+
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateProgress);
+      };
+
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
+      this.destroyRef.onDestroy(() => {
+        window.removeEventListener('scroll', onScroll);
+      });
     });
   }
 }

@@ -17,10 +17,7 @@ export interface ToastItem {
 export class UiStore {
   readonly theme = signal<ThemeMode>('dark');
   readonly scrollProgress = signal(0);
-  readonly menuOpen = signal(false);
   readonly toasts = signal<ToastItem[]>([]);
-  readonly initialLoadDone = signal(false);
-  readonly prefersReducedMotion = signal(false);
 
   readonly isDark = computed(() => this.theme() === 'dark');
   readonly themeLabel = computed(() => (this.theme() === 'dark' ? 'Light' : 'Dark'));
@@ -52,15 +49,9 @@ export class UiStore {
   }
 
   setScrollProgress(value: number): void {
-    this.scrollProgress.set(Math.min(100, Math.max(0, value)));
-  }
-
-  setMenuOpen(open: boolean): void {
-    this.menuOpen.set(open);
-  }
-
-  toggleMenu(): void {
-    this.menuOpen.update((v) => !v);
+    const next = Math.min(100, Math.max(0, value));
+    if (Math.abs(next - this.scrollProgress()) < 0.15) return;
+    this.scrollProgress.set(next);
   }
 
   addToast(message: string, type: ToastItem['type'] = 'info'): void {
@@ -71,10 +62,6 @@ export class UiStore {
 
   removeToast(id: string): void {
     this.toasts.update((list) => list.filter((t) => t.id !== id));
-  }
-
-  completeInitialLoad(): void {
-    this.initialLoadDone.set(true);
   }
 
   private applyThemeToDom(mode: ThemeMode): void {

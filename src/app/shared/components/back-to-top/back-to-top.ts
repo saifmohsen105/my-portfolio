@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal, afterNextRender } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  afterNextRender,
+  inject,
+  signal,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -10,6 +17,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class BackToTop {
   private readonly doc = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   readonly visible = signal(false);
 
   constructor() {
@@ -17,6 +25,9 @@ export class BackToTop {
       const onScroll = () => this.visible.set(window.scrollY > 520);
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
+      this.destroyRef.onDestroy(() => {
+        window.removeEventListener('scroll', onScroll);
+      });
     });
   }
 
