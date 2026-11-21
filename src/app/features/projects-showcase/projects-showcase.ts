@@ -7,6 +7,9 @@ import { RevealDirective } from '../../shared/directives/reveal.directive';
 
 type ProjectFilter = 'All' | ProjectCategory;
 
+/** Lead case studies shown as large tiles in the unfiltered view. */
+const FEATURED_COUNT = 2;
+
 @Component({
   selector: 'app-projects-showcase',
   standalone: true,
@@ -16,14 +19,23 @@ type ProjectFilter = 'All' | ProjectCategory;
   styleUrl: './projects-showcase.css',
 })
 export class ProjectsShowcase {
-  readonly filters: ProjectFilter[] = ['All', 'Product', 'Platform', 'Commerce', 'Marketing'];
+  readonly filters = (['All', 'Product', 'Platform', 'Commerce', 'Marketing'] as const).map(
+    (label: ProjectFilter) => ({
+      label,
+      count: label === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === label).length,
+    }),
+  );
   readonly selected = signal<ProjectFilter>('All');
 
   readonly projects = computed(() => {
     const filter = this.selected();
-    if (filter === 'All') return PROJECTS;
-    return PROJECTS.filter((project) => project.category === filter);
+    return filter === 'All' ? PROJECTS : PROJECTS.filter((project) => project.category === filter);
   });
+
+  readonly featured = computed(() =>
+    this.selected() === 'All' ? this.projects().slice(0, FEATURED_COUNT) : [],
+  );
+  readonly rest = computed(() => this.projects().slice(this.featured().length));
 
   select(filter: ProjectFilter): void {
     this.selected.set(filter);

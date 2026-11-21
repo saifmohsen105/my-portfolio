@@ -1,39 +1,52 @@
 <section id="projects" class="projects section-block" aria-labelledby="projects-heading">
   <div class="container-page">
-    <div appReveal>
+    <div class="projects__top">
       <app-section-header
-        eyebrow="Projects"
+        appReveal
+        index="03"
+        eyebrow="Selected work"
+        headingId="projects-heading"
         title="Projects"
         subtitle="Case studies from the companies on my CV — contribution, architecture, and stack."
       />
+
+      <div class="projects__filters" role="group" aria-label="Filter projects by category" appReveal>
+        @for (filter of filters; track filter.label) {
+          <button
+            type="button"
+            class="projects__filter"
+            [class.projects__filter--active]="selected() === filter.label"
+            [attr.aria-pressed]="selected() === filter.label"
+            [disabled]="filter.count === 0"
+            (click)="select(filter.label)"
+          >
+            {{ filter.label }}
+            <span class="projects__count mono">{{ filter.count }}</span>
+          </button>
+        }
+      </div>
     </div>
 
-    <div class="projects__filters" role="tablist" aria-label="Filter projects" appReveal>
-      @for (filter of filters; track filter) {
-        <button
-          type="button"
-          role="tab"
-          class="projects__filter"
-          [class.projects__filter--active]="selected() === filter"
-          [attr.aria-selected]="selected() === filter"
-          (click)="select(filter)"
-        >
-          {{ filter }}
-        </button>
-      }
-    </div>
+    @if (featured().length) {
+      <div class="projects__featured">
+        @for (project of featured(); track project.id; let i = $index) {
+          <div class="projects__item" appReveal [revealDelay]="i * 120">
+            <app-project-card [project]="project" [index]="i + 1" variant="feature" />
+          </div>
+        }
+      </div>
+    }
 
-    <div class="projects__grid">
-      @for (project of projects(); track project.id) {
-        <div appReveal>
-          <app-project-card [project]="project" />
+    <div class="projects__list" aria-live="polite">
+      @for (project of rest(); track project.id; let i = $index) {
+        <div class="projects__item" appReveal>
+          <app-project-card [project]="project" [index]="featured().length + i + 1" />
         </div>
       } @empty {
-        <div class="projects__empty">
-          <p>No projects in this category.</p>
-        </div>
+        @if (!featured().length) {
+          <p class="projects__empty">No projects in this category.</p>
+        }
       }
     </div>
-    <h2 id="projects-heading" class="visually-hidden">Projects</h2>
   </div>
 </section>

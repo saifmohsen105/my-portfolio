@@ -1,84 +1,133 @@
-.experience__list {
+.xp__list {
   display: grid;
-  gap: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--color-line);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
 }
 
-.experience__item {
-  padding: 1.65rem 0;
-  border-bottom: 1px solid var(--color-line);
-}
-
-.experience__period {
-  margin: 0;
-  color: var(--color-accent);
-  font-family: var(--font-display);
-  font-size: var(--text-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.experience__title {
-  margin: 0.45rem 0 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.experience__company {
-  margin: 0.35rem 0 0;
-  color: var(--color-muted);
-  font-size: var(--text-small);
-}
-
-.experience__summary {
-  margin: 1rem 0 0;
-  color: var(--color-ink-soft);
-  line-height: 1.65;
-  max-width: 48rem;
-}
-
-.experience__highlights {
-  margin: 1rem 0 0;
-  padding-left: 1.1rem;
-  color: var(--color-muted);
+.xp__item {
   display: grid;
-  gap: 0.55rem;
-  max-width: 48rem;
+  gap: 1.25rem;
+  padding-block: 2.25rem;
+  border-top: 1px solid var(--line);
 }
 
-.experience__highlights li::marker {
-  color: var(--color-accent);
+.xp__item:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
-.experience__tech {
+.xp__when {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.xp__period {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+}
+
+.xp__now {
+  padding: 0.15rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--copper) 55%, transparent);
+  color: var(--copper);
+  font-size: 0.62rem;
+}
+
+.xp__company {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem);
+  font-weight: 650;
+  font-stretch: 112%;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.xp__where {
+  color: var(--faint);
+}
+
+.xp__body {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.xp__role {
+  font-size: var(--fs-h3);
+}
+
+.xp__summary {
+  color: var(--ink-2);
+}
+
+.xp__highlights {
+  display: grid;
+  gap: 0.7rem;
+  color: var(--muted);
+}
+
+.xp__highlights li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.xp__highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 0.65rem;
+  height: 1px;
+  background: var(--copper);
+}
+
+.xp__highlights strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.xp__tech {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  list-style: none;
-  margin: 1.15rem 0 0;
-  padding: 0;
+  padding-top: 0.25rem;
 }
 
 @media (min-width: 900px) {
-  .experience__item {
-    display: grid;
-    grid-template-columns: minmax(11rem, 0.32fr) 1fr;
-    gap: 1.5rem 2rem;
-    padding-block: 1.85rem;
+  .xp__item {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+    gap: 4rem;
+    padding-block: 3rem;
   }
 
-  .experience__summary,
-  .experience__highlights,
-  .experience__tech {
-    grid-column: 2;
+  .xp__when {
+    align-self: start;
+    position: sticky;
+    top: calc(var(--nav-h) + 2rem);
   }
 
-  .experience__header {
-    grid-column: 1;
-    grid-row: 1 / -1;
+  /* Rail with a diamond node — the monogram's peak */
+  .xp__body {
+    padding-left: 2.5rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .xp__body::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 0.55rem;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--copper);
+    background: var(--bg);
+    transform: rotate(45deg);
+    transition: background-color var(--dur) ease;
+  }
+
+  .xp__item:hover .xp__body::before {
+    background: var(--copper);
   }
 }

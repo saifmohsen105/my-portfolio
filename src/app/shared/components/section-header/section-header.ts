@@ -11,5 +11,9 @@ export class SectionHeader {
   readonly eyebrow = input.required<string>();
   readonly title = input.required<string>();
   readonly subtitle = input<string>();
-  readonly align = input<'start' | 'center'>('center');
+  /** Two-digit section number shown before the eyebrow, e.g. "02". */
+  readonly index = input<string>();
+  /** Optional id for the heading so the section can use aria-labelledby. */
+  readonly headingId = input<string>();
+  readonly align = input<'start' | 'center'>('start');
 }

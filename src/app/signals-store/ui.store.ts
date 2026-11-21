@@ -17,6 +17,10 @@ export interface ToastItem {
 export class UiStore {
   readonly theme = signal<ThemeMode>('dark');
   readonly scrollProgress = signal(0);
+  /** True once the page has scrolled past the very top (navbar treatment). */
+  readonly scrolled = signal(false);
+  /** Id of the home-page section currently under the navbar (scroll-spy). */
+  readonly activeSection = signal('');
   readonly toasts = signal<ToastItem[]>([]);
 
   readonly isDark = computed(() => this.theme() === 'dark');
@@ -54,6 +58,14 @@ export class UiStore {
     this.scrollProgress.set(next);
   }
 
+  setScrolled(value: boolean): void {
+    if (value !== this.scrolled()) this.scrolled.set(value);
+  }
+
+  setActiveSection(id: string): void {
+    if (id !== this.activeSection()) this.activeSection.set(id);
+  }
+
   addToast(message: string, type: ToastItem['type'] = 'info'): void {
     const id = crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
     this.toasts.update((list) => [...list, { id, message, type }]);
@@ -68,6 +80,6 @@ export class UiStore {
     if (typeof document === 'undefined') return;
     document.documentElement.dataset['theme'] = mode;
     const meta = document.querySelector('meta[name="theme-color"]');
-    meta?.setAttribute('content', mode === 'dark' ? '#0a1014' : '#f3f6f7');
+    meta?.setAttribute('content', mode === 'dark' ? '#0e1012' : '#f1f2f2');
   }
 }

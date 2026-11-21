@@ -1,7 +1,7 @@
 .toast-host {
   position: fixed;
   left: 50%;
-  bottom: 1.25rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0));
   z-index: 140;
   display: grid;
   gap: 0.5rem;
@@ -14,15 +14,16 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-elevated);
-  box-shadow: var(--shadow-lg);
-  color: var(--color-ink);
-  font-size: 0.9rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-left: 2px solid var(--toast-edge, var(--line-strong));
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow);
+  font-size: var(--fs-small);
   font-weight: 500;
   pointer-events: auto;
+  animation: rise-in var(--dur) var(--ease-out) both;
 }
 
 .toast span {
@@ -32,22 +33,25 @@
 .toast button {
   border: 0;
   background: transparent;
-  color: var(--color-muted);
-  font: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.toast button:hover {
+  color: var(--ink);
 }
 
 .toast--success {
-  border-color: color-mix(in srgb, var(--color-success) 35%, transparent);
-  background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface-elevated));
+  --toast-edge: var(--success);
 }
 
 .toast--error {
-  border-color: color-mix(in srgb, var(--color-danger) 35%, transparent);
-  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface-elevated));
+  --toast-edge: var(--danger);
 }
 
 .toast--info {
-  border-color: var(--color-line-strong);
+  --toast-edge: var(--copper);
 }

@@ -1,118 +1,184 @@
 @if (project(); as p) {
-  <article class="case section-block">
-    <div class="container-page">
-      <a routerLink="/" fragment="projects" class="case__back">← Back to projects</a>
+  <article class="case">
+    <header class="case__hero">
+      <div class="container-page">
+        <a routerLink="/" fragment="projects" class="case__back mono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M19 12H5M11 6l-6 6 6 6" />
+          </svg>
+          All projects
+        </a>
 
-      <header class="case__header" appReveal>
-        <div class="case__badges">
-          @if (p.company) {
-            <app-ui-badge>{{ p.company }}</app-ui-badge>
-          }
-          @if (p.status === 'in-development') {
-            <app-ui-badge [accent]="true">In development</app-ui-badge>
-          }
-          <app-ui-badge>{{ p.category }}</app-ui-badge>
-        </div>
-        <h1>{{ p.title }}</h1>
-        <p class="case__subtitle">{{ p.subtitle }}</p>
-        <p class="case__role">{{ p.role }}</p>
-        <p class="case__contribution">{{ p.contribution }}</p>
-        <p class="case__desc">{{ p.description }}</p>
+        <div class="case__intro">
+          <div class="case__heading enter" style="--enter-i: 0">
+            <p class="case__kicker mono">
+              <span class="case__num">{{ number() }}</span>
+              <span class="case__rule" aria-hidden="true"></span>
+              {{ p.category }} · Case study
+            </p>
+            <h1>{{ p.title }}</h1>
+            <p class="case__subtitle">{{ p.subtitle }}</p>
+            <p class="case__desc lead">{{ p.description }}</p>
+          </div>
 
-        <div class="case__actions">
-          @if (p.liveUrl) {
-            <a
-              appUiButton
-              [href]="p.liveUrl"
-              variant="primary"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Live site</a
-            >
-          }
-          @if (p.githubUrl) {
-            <a
-              appUiButton
-              [href]="p.githubUrl"
-              variant="secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub</a
-            >
-          }
-          @if (!p.liveUrl && !p.githubUrl) {
-            <a appUiButton [href]="'mailto:' + site.email" variant="accent">Request a walkthrough</a>
-          }
+          <aside class="case__spec enter" style="--enter-i: 1" aria-label="Project facts">
+            <dl>
+              <div>
+                <dt class="mono">Role</dt>
+                <dd>{{ p.role }}</dd>
+              </div>
+              @if (p.company) {
+                <div>
+                  <dt class="mono">Company</dt>
+                  <dd>{{ p.company }}</dd>
+                </div>
+              }
+              <div>
+                <dt class="mono">Status</dt>
+                <dd>
+                  @if (p.status === 'in-development') {
+                    <app-ui-badge [accent]="true">In development</app-ui-badge>
+                  } @else {
+                    Shipped
+                  }
+                </dd>
+              </div>
+              <div>
+                <dt class="mono">Stack</dt>
+                <dd class="case__stack">
+                  @for (tech of p.stack; track tech) {
+                    <app-ui-badge>{{ tech }}</app-ui-badge>
+                  }
+                </dd>
+              </div>
+            </dl>
+
+            <div class="case__actions">
+              @if (p.liveUrl) {
+                <a appUiButton [href]="p.liveUrl" variant="primary" target="_blank" rel="noopener noreferrer">
+                  Visit live site ↗
+                </a>
+              }
+              @if (p.githubUrl) {
+                <a appUiButton [href]="p.githubUrl" variant="secondary" target="_blank" rel="noopener noreferrer">
+                  GitHub ↗
+                </a>
+              }
+              @if (!p.liveUrl && !p.githubUrl) {
+                <a appUiButton [href]="'mailto:' + site.email" variant="accent">Request a walkthrough</a>
+              }
+            </div>
+          </aside>
         </div>
-        @if (p.privateNote) {
-          <p class="case__note">{{ p.privateNote }}</p>
-        }
-      </header>
+      </div>
+    </header>
+
+    <div class="container-page case__body">
+      <section class="case__contribution" appReveal>
+        <h2 class="case__label mono">My contribution</h2>
+        <p>{{ p.contribution }}</p>
+      </section>
 
       <div class="case__narrative">
-        <section class="case__block case__block--wide" appReveal>
-          <h2>Overview</h2>
+        <section appReveal>
+          <h2 class="case__label mono">Overview</h2>
           <p>{{ p.problem }}</p>
         </section>
-        <section class="case__block case__block--wide" appReveal>
-          <h2>My role</h2>
+        <section appReveal [revealDelay]="100">
+          <h2 class="case__label mono">My role</h2>
           <p>{{ p.context }}</p>
         </section>
       </div>
 
-      <div class="case__grid">
-        <section class="case__block" appReveal>
-          <h2>Implementation</h2>
-          <ul>
+      @if (p.surfaces?.length) {
+        <section class="case__section" appReveal>
+          <h2 class="case__label mono">Surfaces</h2>
+          <ol class="case__surfaces">
+            @for (surface of p.surfaces; track surface.title; let i = $index) {
+              <li>
+                <span class="case__surface-num mono">0{{ i + 1 }}</span>
+                <h3>{{ surface.title }}</h3>
+                <p>{{ surface.body }}</p>
+              </li>
+            }
+          </ol>
+        </section>
+      }
+
+      <div class="case__columns">
+        <section class="case__section" appReveal>
+          <h2 class="case__label mono">Implementation</h2>
+          <ul class="case__list">
             @for (item of p.features; track item) {
               <li>{{ item }}</li>
             }
           </ul>
         </section>
 
-        <section class="case__block" appReveal>
-          <h2>Architecture</h2>
-          <ul>
+        <section class="case__section" appReveal [revealDelay]="100">
+          <h2 class="case__label mono">Architecture</h2>
+          <ul class="case__list">
             @for (item of p.architecture; track item) {
               <li>{{ item }}</li>
             }
           </ul>
         </section>
-
-        <section class="case__block" appReveal>
-          <h2>Engineering challenges</h2>
-          <ul>
-            @for (item of p.challenges; track item) {
-              <li>{{ item }}</li>
-            }
-          </ul>
-        </section>
-
-        <section class="case__block" appReveal>
-          <h2>Decisions</h2>
-          <ul>
-            @for (item of p.solutions; track item) {
-              <li>{{ item }}</li>
-            }
-          </ul>
-        </section>
-
-        <section class="case__block case__block--stack" appReveal>
-          <h2>Technology</h2>
-          <ul class="case__stack">
-            @for (tech of p.stack; track tech) {
-              <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
-            }
-          </ul>
-        </section>
       </div>
+
+      <section class="case__section" appReveal>
+        <h2 class="case__label mono">Engineering challenges &amp; decisions</h2>
+        @if (pairs().length) {
+          <ol class="case__pairs">
+            @for (pair of pairs(); track pair.challenge; let i = $index) {
+              <li>
+                <div>
+                  <p class="case__pair-tag mono">Challenge 0{{ i + 1 }}</p>
+                  <p>{{ pair.challenge }}</p>
+                </div>
+                <div class="case__decision">
+                  <p class="case__pair-tag mono">Decision</p>
+                  <p>{{ pair.solution }}</p>
+                </div>
+              </li>
+            }
+          </ol>
+        } @else {
+          <div class="case__columns">
+            <ul class="case__list">
+              @for (item of p.challenges; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+            <ul class="case__list">
+              @for (item of p.solutions; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </section>
+
+      @if (p.privateNote) {
+        <p class="case__note" appReveal><span class="mono">Scope note</span> {{ p.privateNote }}</p>
+      }
+
+      @if (next(); as n) {
+        <a class="case__next" [routerLink]="['/projects', n.id]" appReveal>
+          <span class="mono">Next case study</span>
+          <span class="case__next-title">{{ n.title }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      }
     </div>
   </article>
 } @else {
   <section class="case section-block">
     <div class="container-page case__empty">
+      <p class="mono">404</p>
       <h1>Project not found</h1>
-      <p>This case study is unavailable.</p>
+      <p class="text-muted">This case study is unavailable.</p>
       <a appUiButton routerLink="/" variant="primary">Return home</a>
     </div>
   </section>

@@ -1,32 +1,32 @@
-<section id="about" class="about section-block" aria-labelledby="about-title">
+<section id="about" class="about section-block" aria-labelledby="about-heading">
   <div class="container-page">
-    <div appReveal>
+    <div class="about__top">
       <app-section-header
+        appReveal
+        index="01"
         eyebrow="About"
-        title="Full-Stack Developer | Angular · Node.js · Express · Supabase"
-        subtitle="Production e-commerce, marketplace, and SaaS platforms — frontend architecture, REST APIs, and database work."
+        headingId="about-heading"
+        title="Full-Stack Developer — Angular, Node.js, Express, Supabase"
       />
-    </div>
 
-    <div class="about__grid">
-      <article class="about__story" appReveal>
-        <h3 id="about-title" class="visually-hidden">About {{ site.firstName }}</h3>
-        <p>{{ site.summary }}</p>
-        <p>
+      <div class="about__story" appReveal [revealDelay]="100">
+        <p class="about__statement">{{ site.summary }}</p>
+        <p class="text-muted">
           Based in {{ site.location }}. Recent delivery spans Stint (Home Expand, E-Shary, StintPort, Career
           In), EXGATE (Excellence Gate, Mustasharuna), a Web Master internship, and freelance commerce work
           such as F-misk.
         </p>
-      </article>
-
-      <ul class="about__points">
-        @for (point of points; track point.title) {
-          <li class="about__point" appReveal>
-            <h3>{{ point.title }}</h3>
-            <p>{{ point.body }}</p>
-          </li>
-        }
-      </ul>
+      </div>
     </div>
+
+    <ol class="about__points">
+      @for (point of points; track point.title; let i = $index) {
+        <li class="about__point" appReveal [revealDelay]="i * 90">
+          <span class="about__index mono" aria-hidden="true">0{{ i + 1 }}</span>
+          <h3>{{ point.title }}</h3>
+          <p>{{ point.body }}</p>
+        </li>
+      }
+    </ol>
   </div>
 </section>

@@ -14,4 +14,5 @@ import { RevealDirective } from '../../shared/directives/reveal.directive';
 })
 export class ContactSection {
   readonly site = SITE;
+  readonly phoneHref = SITE.phone.replace(/\s+/g, '');
 }

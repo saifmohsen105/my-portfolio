@@ -1,18 +1,21 @@
 <footer class="footer">
   <div class="container-page footer__inner">
-    <div class="footer__brand">
-      <p class="footer__name">{{ site.name }}</p>
-      <p class="footer__role">{{ site.role }} · {{ site.location }}</p>
-    </div>
+    <a routerLink="/" class="footer__brand" aria-label="Saif Mohsen — Home">
+      <app-brand-mark class="footer__mark" />
+      <span>
+        <span class="footer__name">{{ site.name }}</span>
+        <span class="footer__role mono">{{ site.role }} · {{ site.location }}</span>
+      </span>
+    </a>
 
     <ul class="footer__links" aria-label="Social links">
       @for (social of site.socials; track social.id) {
         <li>
           <a
+            class="link-draw"
             [href]="social.href"
-            [attr.aria-label]="social.label"
-            target="_blank"
-            rel="noopener noreferrer"
+            [attr.target]="social.id === 'email' ? null : '_blank'"
+            [attr.rel]="social.id === 'email' ? null : 'noopener noreferrer'"
           >
             {{ social.label }}
           </a>
@@ -20,6 +23,6 @@
       }
     </ul>
 
-    <p class="footer__copy">© {{ year }} {{ site.firstName }} Mohsen. Built with Angular.</p>
+    <p class="footer__copy mono">© {{ year }} {{ site.firstName }} Mohsen · Built with Angular</p>
   </div>
 </footer>

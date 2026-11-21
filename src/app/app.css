@@ -2,7 +2,6 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  color: var(--color-ink);
 }
 
 .app-main {
@@ -11,16 +10,16 @@
 }
 
 .skip-link {
-  position: absolute;
+  position: fixed;
   left: 1rem;
-  top: -3rem;
+  top: -4rem;
   z-index: 200;
-  padding: 0.65rem 0.9rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-ink);
-  color: #fff;
+  padding: 0.7rem 1rem;
+  background: var(--copper);
+  color: var(--on-copper);
   font-size: 0.875rem;
   font-weight: 600;
+  transition: top var(--dur-fast) ease;
 }
 
 .skip-link:focus {

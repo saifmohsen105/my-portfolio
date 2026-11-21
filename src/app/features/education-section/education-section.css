@@ -1,53 +1,67 @@
-.education__grid {
+.edu__grid {
   display: grid;
-  gap: 2rem;
+  gap: 3rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.education__col h3 {
-  margin: 0 0 1rem;
-  font-size: var(--text-label);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-faint);
+.edu__label {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: 0.1em;
 }
 
-.education__col ul,
-.education__certs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.edu__degrees li {
   display: grid;
-  gap: 0;
-  border-top: 1px solid var(--color-line);
+  gap: 0.35rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.education__card {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--color-line);
-}
-
-.education__degree {
-  margin: 0;
-  font-family: var(--font-display);
+.edu__degree {
+  font-size: var(--fs-h3);
   font-weight: 600;
+  font-stretch: 108%;
   letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
-.education__school {
-  margin: 0.3rem 0 0;
-  color: var(--color-muted);
-  font-size: var(--text-small);
+.edu__school {
+  color: var(--copper);
+  font-size: var(--fs-small);
+  font-weight: 500;
 }
 
-@media (min-width: 860px) {
-  .education__grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
+.edu__certs li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.95rem;
+  border-bottom: 1px solid var(--line);
+}
 
-  .education__certs {
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1.5rem;
+.edu__cert {
+  font-weight: 500;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.edu__certs li:hover .edu__cert {
+  transform: translateX(4px);
+}
+
+.edu__issuer {
+  flex-shrink: 0;
+  color: var(--muted);
+  text-align: right;
+}
+
+@media (min-width: 900px) {
+  .edu__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 4rem;
   }
 }

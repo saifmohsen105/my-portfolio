@@ -1,46 +1,80 @@
-<article
-  class="project-card"
-  [class.project-card--building]="project().status === 'in-development'"
->
-  <div class="project-card__top">
-    <div class="project-card__meta">
-      @if (project().company) {
-        <app-ui-badge>{{ project().company }}</app-ui-badge>
-      }
-      <app-ui-badge>{{ project().category }}</app-ui-badge>
-      @if (project().status === 'in-development') {
-        <app-ui-badge [accent]="true">In development</app-ui-badge>
+@let p = project();
+@if (variant() === 'feature') {
+  <article class="feature">
+    <div class="feature__plate" aria-hidden="true">
+      <span class="feature__number mono">{{ number() }} / {{ p.category }}</span>
+      <span class="feature__word">{{ p.title }}</span>
+      <span class="feature__domain mono">{{ domain() ?? '' }}</span>
+    </div>
+
+    <div class="feature__body">
+      <p class="feature__meta mono">
+        @if (p.company) {
+          <span>{{ p.company }}</span>
+        }
+        <span>{{ p.role }}</span>
+      </p>
+      <h3 class="feature__title">
+        <a class="stretched" [routerLink]="['/projects', p.id]">{{ p.title }}</a>
+      </h3>
+      <p class="feature__subtitle">{{ p.subtitle }}</p>
+      <p class="feature__text">{{ p.contribution }}</p>
+
+      <ul class="tags" aria-label="Technologies">
+        @for (tech of p.stack.slice(0, 5); track tech) {
+          <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
+        }
+      </ul>
+
+      <div class="actions">
+        <span class="cue">
+          Read case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+        @if (p.liveUrl) {
+          <a class="live link-draw" [href]="p.liveUrl" target="_blank" rel="noopener noreferrer">
+            Live site ↗<span class="visually-hidden"> — {{ p.title }} (opens in new tab)</span>
+          </a>
+        }
+      </div>
+    </div>
+  </article>
+} @else {
+  <article class="row" [class.row--building]="p.status === 'in-development'">
+    <span class="row__number mono" aria-hidden="true">{{ number() }}</span>
+
+    <div class="row__head">
+      <h3 class="row__title">
+        <a class="stretched" [routerLink]="['/projects', p.id]">{{ p.title }}</a>
+      </h3>
+      <p class="row__subtitle">{{ p.subtitle }}</p>
+    </div>
+
+    <p class="row__text">{{ p.contribution }}</p>
+
+    <div class="row__side">
+      <p class="row__meta mono">
+        {{ p.company ?? p.category }}
+        @if (p.status === 'in-development') {
+          <app-ui-badge [accent]="true">In development</app-ui-badge>
+        }
+      </p>
+      <ul class="tags" aria-label="Technologies">
+        @for (tech of p.stack.slice(0, 3); track tech) {
+          <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
+        }
+      </ul>
+      @if (p.liveUrl) {
+        <a class="live link-draw" [href]="p.liveUrl" target="_blank" rel="noopener noreferrer">
+          Live site ↗<span class="visually-hidden"> — {{ p.title }} (opens in new tab)</span>
+        </a>
       }
     </div>
-    <p class="project-card__role">{{ project().role }}</p>
-  </div>
 
-  <h3 class="project-card__title">
-    <a [routerLink]="['/projects', project().id]">{{ project().title }}</a>
-  </h3>
-  <p class="project-card__subtitle">{{ project().subtitle }}</p>
-  <p class="project-card__body">{{ project().contribution }}</p>
-
-  <ul class="project-card__stack" aria-label="Technologies">
-    @for (tech of project().stack.slice(0, 4); track tech) {
-      <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
-    }
-  </ul>
-
-  <div class="project-card__actions">
-    <a class="project-card__link" [routerLink]="['/projects', project().id]">
-      Case study
-      <span aria-hidden="true">→</span>
-    </a>
-    @if (project().liveUrl) {
-      <a
-        class="project-card__link project-card__link--muted"
-        [href]="project().liveUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Live site
-      </a>
-    }
-  </div>
-</article>
+    <svg class="row__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M7 17L17 7M8 7h9v9" />
+    </svg>
+  </article>
+}

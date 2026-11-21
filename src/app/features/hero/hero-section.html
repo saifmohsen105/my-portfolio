@@ -1,40 +1,58 @@
-<section class="hero section-block" aria-labelledby="hero-heading">
+<section class="hero" aria-labelledby="hero-heading">
   <div class="container-page hero__grid">
-    <div class="hero__content" appReveal>
-      <div class="hero__label">
-        <span class="hero__status" aria-hidden="true"></span>
-        <p class="hero__availability">{{ site.availability }}</p>
-      </div>
+    <div class="hero__content">
+      <p class="hero__status mono enter" style="--enter-i: 0">
+        <span class="status-dot" aria-hidden="true"></span>
+        {{ site.availability }}
+      </p>
 
-      <p class="hero__identity">{{ site.name }} · {{ site.role }}</p>
+      <h1 id="hero-heading" class="hero__title enter" style="--enter-i: 1">
+        <span class="hero__identity mono">{{ site.name }} — {{ site.role }}</span>
+        {{ site.headline }}
+      </h1>
 
-      <h1 id="hero-heading" class="hero__title">{{ site.headline }}</h1>
+      <p class="hero__lead lead enter" style="--enter-i: 2">{{ site.positioning }}</p>
 
-      <p class="hero__positioning">{{ site.positioning }}</p>
-
-      <div class="hero__actions">
-        <a appUiButton href="/#projects" variant="primary">View projects</a>
+      <div class="hero__actions enter" style="--enter-i: 3">
+        <a appUiButton href="/#projects" variant="primary">
+          View projects
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
         <a appUiButton href="/#contact" variant="secondary">Discuss a role</a>
       </div>
 
-      <ul class="hero__meta" aria-label="Profile details">
-        <li>{{ site.location }}</li>
-        <li>Angular · Node.js · TypeScript</li>
-      </ul>
+      <dl class="hero__spec enter" style="--enter-i: 4">
+        <div>
+          <dt class="mono">Based in</dt>
+          <dd>{{ site.location }}</dd>
+        </div>
+        @if (current) {
+          <div>
+            <dt class="mono">Currently</dt>
+            <dd>{{ current.role }}, {{ current.company }}</dd>
+          </div>
+        }
+        <div>
+          <dt class="mono">Core stack</dt>
+          <dd>Angular · Node.js · TypeScript</dd>
+        </div>
+      </dl>
     </div>
 
-    <div class="hero__visual" appReveal>
-      <div class="hero__orbit" aria-hidden="true"></div>
-      <div class="hero__orbit hero__orbit--inner" aria-hidden="true"></div>
-      <figure class="">
-        <img
-          src="images/logo.png"
-          alt="Saif Mohsen monogram"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </figure>
-    </div>
+    <figure class="hero__plate enter" style="--enter-i: 2">
+      <span class="hero__tick hero__tick--tl" aria-hidden="true"></span>
+      <span class="hero__tick hero__tick--br" aria-hidden="true"></span>
+      <figcaption class="hero__caption mono">
+        <span>S / M</span>
+        <span>{{ site.firstName }} Mohsen</span>
+      </figcaption>
+      <app-brand-mark class="hero__mark" [animated]="true" label="Saif Mohsen monogram" />
+      <p class="hero__plate-foot mono" aria-hidden="true">
+        <span>{{ site.location }}</span>
+        <span>{{ site.role }}</span>
+      </p>
+    </figure>
   </div>
 </section>

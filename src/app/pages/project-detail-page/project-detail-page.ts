@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { PROJECTS, SITE } from '../../data/portfolio.content';
 import { SeoService } from '../../core/services/seo.service';
@@ -26,23 +26,38 @@ export class ProjectDetailPage {
   );
 
   readonly project = computed(() => PROJECTS.find((item) => item.id === this.projectId()) ?? null);
+  readonly number = computed(() => {
+    const index = PROJECTS.findIndex((item) => item.id === this.projectId());
+    return String(index + 1).padStart(2, '0');
+  });
+  /** Challenges and solutions are authored in matching order. */
+  readonly pairs = computed(() => {
+    const p = this.project();
+    if (!p || p.challenges.length !== p.solutions.length) return [];
+    return p.challenges.map((challenge, i) => ({ challenge, solution: p.solutions[i] }));
+  });
+  readonly next = computed(() => {
+    const index = PROJECTS.findIndex((item) => item.id === this.projectId());
+    return index < 0 ? null : PROJECTS[(index + 1) % PROJECTS.length];
+  });
   readonly site = SITE;
 
   constructor() {
-    const project = PROJECTS.find(
-      (item) => item.id === this.route.snapshot.paramMap.get('id'),
-    );
-    if (project) {
-      this.seo.update({
-        title: `${project.title} — Case Study`,
-        description: project.description,
-        keywords: `${project.title}, ${project.stack.join(', ')}, Saif Mohsen`,
-      });
-    } else {
-      this.seo.update({
-        title: 'Project not found',
-        description: 'The requested case study could not be found.',
-      });
-    }
+    // paramMap emits synchronously (SSR/prerender) and again when moving to the next case study.
+    this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((params) => {
+      const project = PROJECTS.find((item) => item.id === params.get('id'));
+      if (project) {
+        this.seo.update({
+          title: `${project.title} — Case Study`,
+          description: project.description,
+          keywords: `${project.title}, ${project.stack.join(', ')}, Saif Mohsen`,
+        });
+      } else {
+        this.seo.update({
+          title: 'Project not found',
+          description: 'The requested case study could not be found.',
+        });
+      }
+    });
   }
 }

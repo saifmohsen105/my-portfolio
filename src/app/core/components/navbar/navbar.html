@@ -1,121 +1,93 @@
-<header class="navbar" [class.navbar--open]="open()">
+<header class="navbar" [class.navbar--scrolled]="ui.scrolled()" [class.navbar--open]="open()">
   <div class="container-page navbar__inner">
     <a routerLink="/" class="navbar__brand" (click)="close()" aria-label="Saif Mohsen — Home">
-      <img class="navbar__logo" src="images/logo.png" alt="" width="36" height="36" />
-      <span class="navbar__brand-text">
-        <span class="navbar__name">{{ site.firstName }} Mohsen</span>
-        <span class="navbar__role">{{ site.role }}</span>
-      </span>
+      <app-brand-mark class="navbar__mark" />
+      <span class="navbar__name">{{ site.firstName }} Mohsen</span>
     </a>
 
     <nav class="navbar__desktop" aria-label="Primary">
-      @for (link of links; track link.label) {
-        <a class="navbar__link" [href]="link.href" (click)="close()">{{ link.label }}</a>
+      @for (link of links; track link.label; let i = $index) {
+        <a
+          class="navbar__link"
+          [class.navbar__link--active]="ui.activeSection() === link.id"
+          [attr.aria-current]="ui.activeSection() === link.id ? 'location' : null"
+          [href]="link.href"
+          (click)="close()"
+        >
+          <span class="navbar__index mono" aria-hidden="true">0{{ i + 1 }}</span>
+          {{ link.label }}
+        </a>
       }
     </nav>
 
     <div class="navbar__actions">
       <button
         type="button"
-        class="navbar__theme"
+        class="navbar__icon-btn"
         (click)="toggleTheme()"
         [attr.aria-label]="ui.themeActionLabel()"
         [title]="ui.themeActionLabel()"
       >
-        <span class="navbar__theme-icon" aria-hidden="true">
-          @if (ui.isDark()) {
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <circle cx="12" cy="12" r="4" />
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              />
-            </svg>
-          } @else {
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <path d="M21 14.3A8.5 8.5 0 1 1 9.7 3a7 7 0 0 0 11.3 11.3Z" />
-            </svg>
-          }
-        </span>
+        <ng-container *ngTemplateOutlet="themeIcon" />
       </button>
 
       <a appUiButton class="navbar__cta" href="/#contact" variant="primary">Hire me</a>
 
       <button
         type="button"
-        class="navbar__menu-btn"
+        class="navbar__icon-btn navbar__menu-btn"
         [attr.aria-expanded]="open()"
         aria-controls="mobile-nav"
         [attr.aria-label]="open() ? 'Close menu' : 'Open menu'"
         (click)="toggle()"
       >
-        <span class="navbar__menu-lines" aria-hidden="true">
-          <span></span>
-          <span></span>
-        </span>
+        <span class="navbar__menu-lines" aria-hidden="true"><span></span><span></span></span>
       </button>
     </div>
   </div>
 
-  <aside
+  <div
     id="mobile-nav"
-    class="navbar__drawer"
-    [class.navbar__drawer--open]="open()"
+    class="drawer"
+    [class.drawer--open]="open()"
     [attr.aria-hidden]="!open()"
+    [attr.inert]="open() ? null : ''"
     role="dialog"
     aria-modal="true"
     aria-label="Mobile navigation"
   >
-    <div class="navbar__drawer-glow" aria-hidden="true"></div>
-
-    <div class="navbar__drawer-top">
-      <div class="navbar__drawer-brand">
-        <img src="images/logo.png" alt="" width="40" height="40" />
-        <div>
-          <p class="navbar__drawer-name">{{ site.firstName }} Mohsen</p>
-          <p class="navbar__drawer-meta">{{ site.role }}</p>
-        </div>
-      </div>
-
-      <button type="button" class="navbar__drawer-close" aria-label="Close menu" (click)="close()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+    <div class="container-page drawer__top">
+      <a routerLink="/" class="navbar__brand" (click)="close()" aria-label="Saif Mohsen — Home">
+        <app-brand-mark class="navbar__mark" />
+        <span class="navbar__name">{{ site.firstName }} Mohsen</span>
+      </a>
+      <button type="button" class="navbar__icon-btn" aria-label="Close menu" (click)="close()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
       </button>
     </div>
 
-    <p class="navbar__drawer-kicker">Menu</p>
-
-    <nav class="navbar__drawer-nav" aria-label="Mobile">
+    <nav class="container-page drawer__nav" aria-label="Mobile">
       @for (link of links; track link.label; let i = $index) {
-        <a
-          class="navbar__drawer-link"
-          [href]="link.href"
-          [style.--i]="i"
-          (click)="close()"
-        >
-          <span class="navbar__drawer-index">0{{ i + 1 }}</span>
-          <span class="navbar__drawer-label">{{ link.label }}</span>
-          <span class="navbar__drawer-arrow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </span>
+        <a class="drawer__link" [href]="link.href" [style.--i]="i" (click)="close()">
+          <span class="drawer__index mono">0{{ i + 1 }}</span>
+          <span class="drawer__label">{{ link.label }}</span>
+          <svg class="drawer__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </a>
       }
     </nav>
 
-    <div class="navbar__drawer-foot">
-      <div class="navbar__drawer-info">
-        <p class="navbar__drawer-location">{{ site.location }}</p>
-        <p class="navbar__drawer-availability">{{ site.availability }}</p>
-      </div>
+    <div class="container-page drawer__foot">
+      <p class="drawer__meta mono">{{ site.location }} — {{ site.availability }}</p>
 
-      <div class="navbar__drawer-socials">
+      <div class="drawer__socials">
         @for (social of site.socials; track social.id) {
           <a
-            class="navbar__drawer-social"
+            class="link-draw"
             [href]="social.href"
-            [attr.aria-label]="social.label"
             [attr.target]="social.id === 'email' ? null : '_blank'"
             [attr.rel]="social.id === 'email' ? null : 'noopener noreferrer'"
             (click)="close()"
@@ -125,34 +97,34 @@
         }
       </div>
 
-      <div class="navbar__drawer-actions">
+      <div class="drawer__actions">
         <button
           type="button"
-          class="navbar__theme navbar__theme--drawer"
+          appUiButton
+          variant="secondary"
           (click)="toggleTheme()"
           [attr.aria-label]="ui.themeActionLabel()"
         >
-          <span class="navbar__theme-icon" aria-hidden="true">
-            @if (ui.isDark()) {
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-                <circle cx="12" cy="12" r="4" />
-                <path
-                  d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-                />
-              </svg>
-            } @else {
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
-                <path d="M21 14.3A8.5 8.5 0 1 1 9.7 3a7 7 0 0 0 11.3 11.3Z" />
-              </svg>
-            }
-          </span>
-          <span>{{ ui.themeLabel() }} mode</span>
+          <ng-container *ngTemplateOutlet="themeIcon" />
+          {{ ui.themeLabel() }} mode
         </button>
-
-        <a appUiButton class="navbar__drawer-cta" href="/#contact" variant="primary" (click)="close()">
-          Hire me
-        </a>
+        <a appUiButton href="/#contact" variant="accent" (click)="close()">Hire me</a>
       </div>
     </div>
-  </aside>
+  </div>
 </header>
+
+<ng-template #themeIcon>
+  <span class="navbar__theme-icon" aria-hidden="true">
+    @if (ui.isDark()) {
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    } @else {
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M21 14.3A8.5 8.5 0 1 1 9.7 3a7 7 0 0 0 11.3 11.3Z" />
+      </svg>
+    }
+  </span>
+</ng-template>

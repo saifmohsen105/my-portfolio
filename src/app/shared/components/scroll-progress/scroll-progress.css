@@ -1,12 +1,9 @@
 .scroll-progress {
-  pointer-events: none;
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0 0 auto;
   z-index: 120;
-  width: 100%;
   height: 2px;
-  transform-origin: left center;
-  background: var(--color-accent);
-  transition: width 120ms ease-out;
+  background: var(--copper);
+  transform-origin: left;
+  pointer-events: none;
 }

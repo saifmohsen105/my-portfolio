@@ -1,38 +1,45 @@
 <section id="stack" class="stack section-block" aria-labelledby="stack-heading">
   <div class="container-page">
-    <div appReveal>
+    <div class="stack__top">
       <app-section-header
+        appReveal
+        index="04"
         eyebrow="Technical stack"
+        headingId="stack-heading"
         title="Tools I use to ship production software"
         subtitle="Angular and TypeScript lead. Supporting tools cover APIs, data layers, and delivery."
       />
+      <p class="stack__legend mono" appReveal>
+        <span class="stack__core" aria-hidden="true"></span> Core tools
+      </p>
     </div>
 
-    <div class="stack__filters" role="tablist" aria-label="Filter technologies" appReveal>
-      @for (filter of filters; track filter) {
-        <button
-          type="button"
-          role="tab"
-          class="stack__filter"
-          [class.stack__filter--active]="selected() === filter"
-          [attr.aria-selected]="selected() === filter"
-          (click)="select(filter)"
-        >
-          {{ filter }}
-        </button>
+    <div class="stack__matrix">
+      @for (group of groups; track group.category; let i = $index) {
+        <section class="stack__group" appReveal [revealDelay]="i * 80" [attr.aria-labelledby]="'stack-' + group.category">
+          <h3 class="stack__heading mono" [id]="'stack-' + group.category">
+            {{ group.category }}
+            <span>{{ group.items.length < 10 ? '0' + group.items.length : group.items.length }}</span>
+          </h3>
+          <ul class="stack__list">
+            @for (item of group.items; track item.name) {
+              <li class="stack__item">
+                <span class="stack__icon" aria-hidden="true">
+                  @if (item.icon) {
+                    <img [src]="item.icon" alt="" width="64" height="64" loading="lazy" decoding="async" />
+                  } @else {
+                    <span class="mono">{{ item.initials }}</span>
+                  }
+                </span>
+                <span class="stack__name">{{ item.name }}</span>
+                @if (item.featured) {
+                  <span class="stack__core" role="img" aria-label="Core tool"></span>
+                }
+              </li>
+            }
+          </ul>
+        </section>
       }
     </div>
-
-    <ul class="stack__grid" appReveal>
-      @for (item of filtered(); track item.name) {
-        <li class="stack__item">
-          @if (item.icon) {
-            <img [src]="item.icon" [alt]="''" width="28" height="28" loading="lazy" />
-          }
-          <span>{{ item.name }}</span>
-        </li>
-      }
-    </ul>
-    <h2 id="stack-heading" class="visually-hidden">Tech stack</h2>
   </div>
 </section>

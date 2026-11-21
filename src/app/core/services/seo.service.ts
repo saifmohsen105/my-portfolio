@@ -34,7 +34,7 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
     this.meta.updateTag({ name: 'twitter:description', content: page.description });
 
-    const image = page.image ?? 'images/hero-display.jpg';
+    const image = page.image ?? 'images/og-cover.jpg';
     this.meta.updateTag({ property: 'og:image', content: image });
     this.meta.updateTag({ name: 'twitter:image', content: image });
 

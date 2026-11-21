@@ -1,33 +1,34 @@
-<section id="education" class="education section-block" aria-labelledby="education-heading">
+<section id="education" class="edu section-block" aria-labelledby="education-heading">
   <div class="container-page">
-    <div appReveal>
-      <app-section-header
-        eyebrow="Background"
-        title="Education and focused certifications"
-        subtitle="IT fundamentals, programming discipline, and Angular / .NET training."
-      />
-    </div>
+    <app-section-header
+      appReveal
+      index="06"
+      eyebrow="Background"
+      headingId="education-heading"
+      title="Education and focused certifications"
+      subtitle="IT fundamentals, programming discipline, and Angular / .NET training."
+    />
 
-    <div class="education__grid">
-      <div class="education__col" appReveal>
-        <h3 id="education-heading">Education</h3>
-        <ul>
+    <div class="edu__grid">
+      <div class="edu__col" appReveal>
+        <h3 class="edu__label mono">Education</h3>
+        <ul class="edu__degrees">
           @for (item of education; track item.id) {
-            <li class="education__card">
-              <p class="education__degree">{{ item.degree }}</p>
-              <p class="education__school">{{ item.institution }}</p>
+            <li>
+              <p class="edu__degree">{{ item.degree }}</p>
+              <p class="edu__school">{{ item.institution }}</p>
             </li>
           }
         </ul>
       </div>
 
-      <div class="education__col" appReveal>
-        <h3>Certificates</h3>
-        <ul class="education__certs">
+      <div class="edu__col" appReveal [revealDelay]="100">
+        <h3 class="edu__label mono">Certificates</h3>
+        <ul class="edu__certs">
           @for (cert of certificates; track cert.id) {
-            <li class="education__card">
-              <p class="education__degree">{{ cert.title }}</p>
-              <p class="education__school">{{ cert.issuer }}</p>
+            <li>
+              <span class="edu__cert">{{ cert.title }}</span>
+              <span class="edu__issuer mono">{{ cert.issuer }}</span>
             </li>
           }
         </ul>

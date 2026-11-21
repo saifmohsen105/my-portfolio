@@ -2,11 +2,12 @@
   type="button"
   class="back-top"
   [class.back-top--visible]="visible()"
+  [attr.tabindex]="visible() ? null : -1"
+  [attr.aria-hidden]="visible() ? null : 'true'"
   (click)="scrollTop()"
   aria-label="Back to top"
 >
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
     <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
-  <span>Top</span>
 </button>

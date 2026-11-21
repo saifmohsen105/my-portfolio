@@ -8,17 +8,18 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, fromEvent } from 'rxjs';
 import { NAV_ITEMS, SITE } from '../../../data/portfolio.content';
 import { UiStore } from '../../../signals-store/ui.store';
 import { UiButton } from '../../../shared/components/ui-button/ui-button';
+import { BrandMark } from '../../../shared/components/brand-mark/brand-mark';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, UiButton],
+  imports: [RouterLink, NgTemplateOutlet, UiButton, BrandMark],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -31,7 +32,7 @@ export class Navbar {
 
   readonly ui = inject(UiStore);
   readonly site = SITE;
-  readonly links = NAV_ITEMS;
+  readonly links = NAV_ITEMS.map((item) => ({ ...item, id: item.href.split('#')[1] ?? '' }));
   readonly open = signal(false);
 
   constructor() {

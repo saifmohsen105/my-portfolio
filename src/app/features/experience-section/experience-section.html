@@ -1,40 +1,51 @@
-<section id="experience" class="experience section-block" aria-labelledby="experience-heading">
+<section id="experience" class="xp section-block" aria-labelledby="experience-heading">
   <div class="container-page">
-    <div appReveal>
-      <app-section-header
-        eyebrow="Experience"
-        title="Professional experience"
-        subtitle="Companies and roles from my CV — Stint, EXGATE, Web Master, and freelance delivery."
-      />
-    </div>
+    <app-section-header
+      appReveal
+      index="02"
+      eyebrow="Experience"
+      headingId="experience-heading"
+      title="Professional experience"
+      subtitle="Companies and roles from my CV — Stint, EXGATE, Web Master, and freelance delivery."
+    />
 
-    <ol class="experience__list">
+    <ol class="xp__list">
       @for (role of roles; track role.id) {
-        <li class="experience__item" appReveal>
-          <div class="experience__header">
-            <p class="experience__period">{{ role.period }}</p>
-            <h3 class="experience__title">{{ role.role }}</h3>
-            <p class="experience__company">
-              {{ role.company }} · {{ role.employmentType }} · {{ role.location }}
+        <li class="xp__item" appReveal>
+          <div class="xp__when">
+            <p class="xp__period mono">
+              {{ role.period }}
+              @if (role.current) {
+                <span class="xp__now">Current</span>
+              }
             </p>
+            <p class="xp__company">{{ role.company }}</p>
+            <p class="xp__where mono">{{ role.employmentType }} · {{ role.location }}</p>
           </div>
 
-          <p class="experience__summary">{{ role.summary }}</p>
+          <div class="xp__body">
+            <h3 class="xp__role">{{ role.role }}</h3>
+            <p class="xp__summary">{{ role.summary }}</p>
 
-          <ul class="experience__highlights">
-            @for (item of role.highlights; track item) {
-              <li>{{ item }}</li>
-            }
-          </ul>
+            <ul class="xp__highlights">
+              @for (item of role.items; track item.text) {
+                <li>
+                  @if (item.lead) {
+                    <strong>{{ item.lead }}</strong> —
+                  }
+                  {{ item.text }}
+                </li>
+              }
+            </ul>
 
-          <ul class="experience__tech" aria-label="Technologies used">
-            @for (tech of role.technologies; track tech) {
-              <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
-            }
-          </ul>
+            <ul class="xp__tech" aria-label="Technologies used">
+              @for (tech of role.technologies; track tech) {
+                <li><app-ui-badge>{{ tech }}</app-ui-badge></li>
+              }
+            </ul>
+          </div>
         </li>
       }
     </ol>
-    <h2 id="experience-heading" class="visually-hidden">Experience</h2>
   </div>
 </section>

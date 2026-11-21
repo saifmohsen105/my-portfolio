@@ -1,194 +1,189 @@
 .hero {
   position: relative;
-  isolation: isolate;
-  padding-top: clamp(2rem, 5vw, 3.75rem);
-  padding-bottom: clamp(3rem, 6vw, 5.5rem);
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 auto auto;
-  width: min(42vw, 28rem);
-  height: min(42vw, 28rem);
-  translate: 12% -18%;
-  background: radial-gradient(circle, var(--color-hero-glow), transparent 68%);
-  pointer-events: none;
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem);
 }
 
 .hero__grid {
   display: grid;
-  gap: 2.75rem;
+  gap: clamp(2.5rem, 6vw, 4rem);
   align-items: center;
 }
 
 .hero__content {
-  max-width: 40rem;
-}
-
-.hero__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0.35rem 0.7rem 0.35rem 0.55rem;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-surface-elevated) 78%, transparent);
+  display: grid;
+  gap: 1.75rem;
+  min-width: 0;
 }
 
 .hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.status-dot {
+  flex-shrink: 0;
   width: 0.5rem;
   height: 0.5rem;
-  flex-shrink: 0;
   border-radius: 50%;
-  background: var(--color-success);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-success) 22%, transparent);
-}
-
-.hero__availability {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-caption);
-  font-weight: 600;
-  color: var(--color-muted);
-  letter-spacing: 0.01em;
-}
-
-.hero__identity {
-  margin: 1.25rem 0 0;
-  font-family: var(--font-display);
-  font-size: var(--text-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-accent);
+  background: var(--success);
 }
 
 .hero__title {
-  margin: 0.75rem 0 0;
-  max-width: 16ch;
-  font-size: var(--text-display);
-  font-weight: 600;
-  letter-spacing: var(--tracking-display);
-  line-height: var(--leading-display);
+  font-size: var(--fs-display);
+  font-weight: 640;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
 }
 
-.hero__positioning {
-  margin: 1.25rem 0 0;
+.hero__identity {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--copper);
+  font-stretch: 100%;
+  line-height: 1.5;
+}
+
+.hero__lead {
   max-width: 36rem;
-  color: var(--color-muted);
-  font-size: 1.05rem;
-  line-height: var(--leading-body);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.85rem;
 }
 
-.hero__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  list-style: none;
-  margin: 1.65rem 0 0;
-  padding: 0;
-  color: var(--color-faint);
-  font-size: var(--text-small);
+.hero__spec {
+  display: grid;
+  gap: 1rem;
+  margin: 0.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
 }
 
-.hero__visual {
+.hero__spec div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.hero__spec dt {
+  color: var(--muted);
+}
+
+.hero__spec dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ── Specimen plate ────────────────────────────────────────── */
+.hero__plate {
+  --cut: var(--cut-lg);
   position: relative;
   display: grid;
-  place-items: center;
-  width: min(100%, 22rem);
-  aspect-ratio: 1;
-  margin-inline: auto;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  margin: 0;
+  aspect-ratio: 5 / 4;
+  max-height: 34rem;
+  padding: 1.25rem;
+  overflow: hidden;
+  background:
+    linear-gradient(var(--plate-line) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+    linear-gradient(90deg, var(--plate-line) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+    var(--plate-bg);
+  color: var(--plate-ink);
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+  --mark-fill: var(--plate-steel);
+  --mark-edge: var(--plate-copper);
+  --mark-stroke: 1.5px;
 }
 
-.hero__orbit,
-.hero__orbit--inner {
+/* One slow light pass across the steel after the mark has drawn */
+.hero__plate::after {
+  content: '';
   position: absolute;
-  border-radius: 50%;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.06), transparent);
+  transform: translateX(-120%) skewX(-18deg);
   pointer-events: none;
 }
 
-.hero__orbit {
-  inset: -8%;
-  background: conic-gradient(
-    from 210deg,
-    transparent 0 62%,
-    var(--color-line-strong) 0 78%,
-    transparent 0 100%
-  );
-  mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 calc(100% - 1px));
+.hero__caption,
+.hero__plate-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
 }
 
-.hero__orbit--inner {
-  inset: -2%;
-  background: conic-gradient(
-    from 40deg,
-    transparent 0 72%,
-    color-mix(in srgb, var(--color-accent) 55%, var(--color-line)) 0 86%,
-    transparent 0 100%
-  );
-  mask: radial-gradient(farthest-side, transparent calc(100% - 1px), #000 calc(100% - 1px));
+.hero__plate-foot span:last-child {
+  color: var(--plate-copper);
 }
 
 .hero__mark {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 72%;
-  aspect-ratio: 1;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 28%;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-line-strong));
-  background: #05080a;
-  box-shadow:
-    var(--shadow-lg),
-    0 0 0 10px color-mix(in srgb, var(--color-surface) 88%, transparent);
+  align-self: center;
+  justify-self: center;
+  width: min(68%, 22rem);
 }
 
-.hero__mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.hero__tick {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-color: var(--plate-copper);
+  border-style: solid;
+  pointer-events: none;
 }
 
-@media (min-width: 960px) {
-  .hero__grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
-    gap: 4rem;
+.hero__tick--tl {
+  top: 3.2rem;
+  left: 3.2rem;
+  border-width: 1px 0 0 1px;
+}
+
+.hero__tick--br {
+  right: 3.2rem;
+  bottom: 3.2rem;
+  border-width: 0 1px 1px 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__plate::after {
+    animation: sheen-pass 1.6s var(--ease-in-out) 1.9s both;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero__spec {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .hero__visual {
-    width: min(100%, 26rem);
-    justify-self: end;
-    margin-inline: 0;
+  .hero__plate {
+    aspect-ratio: 1 / 1;
+    padding: 1.5rem;
   }
+}
 
-  .hero__meta {
-    flex-direction: row;
+@media (min-width: 1024px) {
+  .hero {
+    display: flex;
     align-items: center;
-    gap: 1.15rem;
+    min-height: min(60rem, calc(100svh - var(--nav-h)));
   }
 
-  .hero__meta li + li::before {
-    content: '·';
-    margin-right: 1.15rem;
-    color: var(--color-line-strong);
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 5.5rem);
   }
 }
-
-/*
-  Orbit/status animations live in global styles.css.
-  Production CSS optimization renames @keyframes under emulated encapsulation
-  but drops the matching animation-name rewrite, which freezes the arcs on Vercel.
-*/
